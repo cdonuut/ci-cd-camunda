@@ -34,13 +34,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy via GitHub Connector
-        uses: camunda/github-connector-action@v1
-        with:
-          client-id: ${{ secrets.CAMUNDA_CLIENT_ID }}
-          client-secret: ${{ secrets.CAMUNDA_CLIENT_SECRET }}
-          audience: ${{ secrets.CAMUNDA_AUDIENCE }}
-          model-paths: |
-            processes/*.bpmn
-            forms/*.form
-            dmns/*.dmn
+      - name: Get Bearer Token
+        id: get_token
+        run: |
+            RESPONSE=$(curl -s --request POST \
+              --url https://login.cloud.camunda.io/oauth/token \
+              --header 'content-type: application/json' \
+              --data '{
+                "grant_type":"client_credentials",
+                "client_id":"${{ secrets.CAMUNDA_CLIENT_ID }}",
+                "client_secret":"${{ secrets.CAMUNDA_CLIENT_SECRET }}",
+                "audience":"${{ secrets.CAMUNDA_AUTH_AUDIENCE }}"
+              }')
+            
+            echo "RESPONSE: $RESPONSE"
+            ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
+            echo "::add-mask::$ACCESS_TOKEN"
+            echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
+
+      - name: Deploy models to Camunda SaaS
+        run: |
+            echo "Finding and deploying all models..."
+            
+            FORM_DATA=$(find src/main/resources/processes src/main/resources/forms src/main/resources/dmns -type f -exec echo -n "-F files=@{} " \;)
+            
+            echo "Files to deploy: $FORM_DATA"
+            
+            eval curl -X POST https://api.cloud.camunda.io/modeler/v1/projects/${{ secrets.CAMUNDA_PROJECT_ID }}/deployments \
+              -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
+              -H "Content-Type: multipart/form-data" \
+              $FORM_DATA
