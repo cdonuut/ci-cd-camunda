@@ -47,7 +47,7 @@ jobs:
               "audience":"${{ secrets.CAMUNDA_AUTH_AUDIENCE }}"
             }')
 
-          echo "TOKEN RESPONSE: $RESPONSE"  # show full response for debugging
+          echo "TOKEN RESPONSE: $RESPONSE"
 
           ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
 
@@ -59,15 +59,22 @@ jobs:
           echo "::add-mask::$ACCESS_TOKEN"
           echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
 
+      - name: Prepare model files
+        run: |
+          mkdir deploy
+          cp src/main/resources/processes/*.bpmn deploy/ || true
+          cp src/main/resources/forms/*.form deploy/ || true
+          cp src/main/resources/dmns/*.dmn deploy/ || true
+
       - name: Deploy models to Camunda SaaS
         run: |
-            echo "Finding and deploying all models..."
-            
-            FORM_DATA=$(find src/main/resources/processes src/main/resources/forms src/main/resources/dmns -type f -exec echo -n "-F files=@{} " \;)
-            
-            echo "Files to deploy: $FORM_DATA"
-            
-            eval curl -X POST https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/deployments \
-              -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
-              -H "Content-Type: multipart/form-data" \
-              $FORM_DATA
+          echo "Finding and deploying all models..."
+
+          FORM_DATA=$(find deploy -type f -exec echo -n "-F files=@{} " \;)
+
+          echo "Files to deploy: $FORM_DATA"
+
+          eval curl -X POST https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/deployments \
+            -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
+            -H "Content-Type: multipart/form-data" \
+            $FORM_DATA
