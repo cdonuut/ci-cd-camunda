@@ -70,11 +70,11 @@ jobs:
         run: |
           echo "Finding and deploying all models..."
 
-          FORM_DATA=$(find deploy -type f -exec echo -n "-F files=@{} " \;)
+          FORM_DATA=$(find deploy -type f -exec printf -- "-F files=@\"%s\" " {} \;)
 
           echo "Files to deploy: $FORM_DATA"
 
-          eval curl -X POST https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/deployments \
+          curl -X POST "https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/deployments" \
             -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
             -H "Content-Type: multipart/form-data" \
             $FORM_DATA
