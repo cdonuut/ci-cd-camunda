@@ -34,7 +34,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get Bearer Token
+      - name: Get Zeebe Bearer Token
         id: get_token
         run: |
           RESPONSE=$(curl -s --request POST \
@@ -67,7 +67,7 @@ jobs:
             
             echo "Files to deploy: $FORM_DATA"
             
-            eval curl -X POST https://api.cloud.camunda.io/modeler/v1/projects/${{ secrets.CAMUNDA_PROJECT_ID }}/deployments \
+            eval curl -X POST https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/deployments \
               -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
               -H "Content-Type: multipart/form-data" \
               $FORM_DATA
