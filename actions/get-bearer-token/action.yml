@@ -1,10 +1,10 @@
-name: Get Camunda Bearer Token
-description: Authenticates with Camunda and returns a fresh access token
+name: "Get Camunda Bearer Token"
+description: "Fetch a fresh Camunda Cloud OAuth token using client credentials"
 runs:
   using: "composite"
   steps:
     - name: Get Token
-      id: token
+      id: get-token
       shell: bash
       run: |
         RESPONSE=$(curl -s --request POST \
