@@ -7,27 +7,27 @@ on:
     branches: [ main ]
 
 jobs:
-#  test:
-#    name: Run Zeebe Process Test
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Java
-#        uses: actions/setup-java@v3
-#        with:
-#          distribution: 'temurin'
-#          java-version: '21'
-#
-#      - name: Run tests
-#        run: mvn clean test
+  test:
+    name: Run Zeebe Process Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Run tests
+        run: mvn clean test
 
   deploy:
     name: Deploy to Camunda SaaS
     runs-on: ubuntu-latest
-    # needs: test
+    needs: test
     if: github.ref == 'refs/heads/main'
 
     steps:
