@@ -19,13 +19,16 @@ runs:
       id: get-token
       shell: bash
       run: |
+        echo "DEBUG: client_id=$(echo 'YOUR_REAL_CLIENT_ID' | base64)"
+        echo "DEBUG: client_secret=$(echo 'YOUR_REAL_CLIENT_SECRET' | base64)"
+        echo "DEBUG: audience=$(echo 'YOUR_REAL_AUDIENCE' | base64)"
         RESPONSE=$(curl -s --request POST \
         --url https://login.cloud.camunda.io/oauth/token \
         --header 'Content-Type: application/x-www-form-urlencoded' \
-        --data-urlencode 'grant_type=client_credentials' \
-        --data-urlencode 'client_id=MFtxiv0TSBxUrBtTYzIwpZ0Z5elzJQNE' \
-        --data-urlencode 'client_secret=rnzbiYvJYjGDWf4.yRfU~2QKpnlljFOXxeuChEzECpZX4gNzZtEAYJU9cRwYnEyM' \
-        --data-urlencode 'audience=zeebe.camunda.io')
+        --data 'grant_type=client_credentials' \
+        --data 'client_id=MFtxiv0TSBxUrBtTYzIwpZ0Z5elzJQNE' \
+        --data 'client_secret=rnzbiYvJYjGDWf4.yRfU~2QKpnlljFOXxeuChEzECpZX4gNzZtEAYJU9cRwYnEyM' \
+        --data 'audience=zeebe.camunda.io')
 
         ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
         echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
