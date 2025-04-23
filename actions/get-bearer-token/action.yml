@@ -35,4 +35,7 @@ runs:
           exit 1
         fi
 
-        echo "token=${ACCESS_TOKEN}" >> $GITHUB_OUTPUT
+        # Add this to your get-bearer-token action
+        echo "Response status: $(echo "$RESPONSE" | jq -r '.error // "No error"')"
+        echo "Response description: $(echo "$RESPONSE" | jq -r '.error_description // "No description"')"
+        echo "token=$ACCESS_TOKEN" >> "$GITHUB_OUTPUT"

@@ -36,38 +36,35 @@ jobs:
 
       - name: Get Zeebe Bearer Token
         id: get_token
+        uses: ./actions/get-bearer-token
+        with:
+          client_id: ${{ secrets.CAMUNDA_CLIENT_ID }}
+          client_secret: ${{ secrets.CAMUNDA_CLIENT_SECRET }}
+          audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
+
+      - name: Debug Token
         run: |
-          RESPONSE=$(curl -s --request POST \
-            --url https://login.cloud.camunda.io/oauth/token \
-            --header 'content-type: application/json' \
-            --data '{
-              "grant_type":"client_credentials",
-              "client_id":"${{ secrets.CAMUNDA_CLIENT_ID }}",
-              "client_secret":"${{ secrets.CAMUNDA_CLIENT_SECRET }}",
-              "audience":"${{ secrets.CAMUNDA_AUTH_AUDIENCE }}"
-            }')
+          echo "Token exists: ${{ steps.get_token.outputs.token != '' }}"
 
-          echo "TOKEN RESPONSE: $RESPONSE"  # show full response for debugging
-
-          ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
-
-          if [[ "$ACCESS_TOKEN" == "null" || -z "$ACCESS_TOKEN" ]]; then
-            echo "❌ Failed to extract access_token from response"
-            exit 1
-          fi
-
-          echo "::add-mask::$ACCESS_TOKEN"
-          echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
+      - name: Prepare model files
+        run: |
+          mkdir deploy
+          cp src/main/resources/processes/*.bpmn deploy/ || true
+          cp src/main/resources/forms/*.form deploy/ || true
+          cp src/main/resources/dmns/*.dmn deploy/ || true
 
       - name: Deploy models to Camunda SaaS
         run: |
-            echo "Finding and deploying all models..."
-            
-            FORM_DATA=$(find src/main/resources/processes src/main/resources/forms src/main/resources/dmns -type f -exec echo -n "-F files=@{} " \;)
-            
-            echo "Files to deploy: $FORM_DATA"
-            
-            eval curl -X POST https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_PROJECT_ID }}/v2//deployments \
-              -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
-              -H "Content-Type: multipart/form-data" \
-              $FORM_DATA
+          # Deploy all files in a single request
+          FILES=$(find deploy -type f | tr '\n' ' ')
+          echo "Deploying files: $FILES"
+          
+          CURL_ARGS=()
+          for FILE in $FILES; do
+          CURL_ARGS+=(-F "files=@$FILE")
+          done
+          
+          curl -X POST "https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/deployments" \
+          -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
+          -H "Content-Type: multipart/form-data" \
+          "${CURL_ARGS[@]}"
