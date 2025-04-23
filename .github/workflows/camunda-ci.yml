@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get Zeebe Bearer Token
-        uses: ./CICD-workshop/.github/actions/get-bearer-token
+        uses: .actions/get-bearer-token
         id: get_token
 
       - name: Prepare model files
