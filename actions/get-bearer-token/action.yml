@@ -26,9 +26,9 @@ runs:
         --url https://login.cloud.camunda.io/oauth/token \
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --data 'grant_type=client_credentials' \
-        --data 'client_id=MFtxiv0TSBxUrBtTYzIwpZ0Z5elzJQNE' \
-        --data 'client_secret=rnzbiYvJYjGDWf4.yRfU~2QKpnlljFOXxeuChEzECpZX4gNzZtEAYJU9cRwYnEyM' \
-        --data 'audience=zeebe.camunda.io')
+        --data "client_id=$(echo -n 'MFtxiv0TSBxUrBtTYzIwpZ0Z5elzJQNE')" \
+        --data "client_secret=$(echo -n 'rnzbiYvJYjGDWf4.yRfU~2QKpnlljFOXxeuChEzECpZX4gNzZtEAYJU9cRwYnEyM')" \
+        --data "audience=$(echo -n 'zeebe.camunda.io')")
 
         ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
         echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
