@@ -51,16 +51,16 @@ jobs:
 
       - name: Deploy models to Camunda SaaS
         run: |
-          # Deploy all files in a single request
+          echo "🔍 Preparing model files for upload..."
           FILES=$(find deploy -type f | tr '\n' ' ')
           echo "Deploying files: $FILES"
-          
+
           CURL_ARGS=()
           for FILE in $FILES; do
-          CURL_ARGS+=(-F "files=@$FILE")
+            CURL_ARGS+=(-F "files=@$FILE")
           done
-          
+
           curl -X POST "https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/deployments" \
-          -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
-          -H "Content-Type: multipart/form-data" \
-          "${CURL_ARGS[@]}"
+            -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
+            -H "Content-Type: multipart/form-data" \
+            "${CURL_ARGS[@]}"
