@@ -49,10 +49,13 @@ jobs:
           cp src/main/resources/forms/*.form deploy/ || true
           cp src/main/resources/dmns/*.dmn deploy/ || true
 
-      - name: Print token length
+      - name: Lint BPMN diagrams
         run: |
-          TOKEN="${{ steps.get_token.outputs.token }}"
-          echo "Token length: ${#TOKEN}"
+          npm install bpmnlint bpmnlint-plugin-camunda
+          for file in deploy/*.bpmn; do
+            echo "Validating $file"
+            npx bpmnlint "$file"
+          done
       
 
       - name: Deploy models to Camunda SaaS

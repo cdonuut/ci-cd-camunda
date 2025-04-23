@@ -11,7 +11,7 @@ inputs:
 outputs:
   token:
     description: "The generated bearer token"
-    value: ${{ steps.get-token.outputs.token }} 
+    value: ${{ steps.get-token.outputs.token }}
 
 runs:
   using: "composite"
