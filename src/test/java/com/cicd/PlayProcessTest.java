@@ -20,7 +20,7 @@ public class PlayProcessTest {
   void shouldDeployProcess() {
     DeploymentEvent deploymentEvent = client
             .newDeployResourceCommand()
-            .addResourceFromClasspath("processes/PlayProcess.bpmn")
+            .addResourceFromClasspath("models/PlayProcess.bpmn")
             .send()
             .join();
 

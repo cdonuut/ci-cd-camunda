@@ -45,9 +45,9 @@ jobs:
       - name: Prepare model files
         run: |
           mkdir deploy
-          cp src/main/resources/processes/*.bpmn deploy/ || true
-          cp src/main/resources/forms/*.form deploy/ || true
-          cp src/main/resources/dmns/*.dmn deploy/ || true
+          cp src/main/resources/models/*.bpmn deploy/ || true
+          cp src/main/resources/models/*.form deploy/ || true
+          cp src/main/resources/models/*.dmn deploy/ || true
 
       - name: Lint BPMN diagrams
         run: |
