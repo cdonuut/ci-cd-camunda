@@ -19,6 +19,13 @@ runs:
       id: get-token
       shell: bash
       run: |
+        echo "🔎 Curl preview (DO NOT LOG in production):"
+        echo "curl -X POST https://login.cloud.camunda.io/oauth/token \\"
+        echo "  -H 'Content-Type: application/x-www-form-urlencoded' \\"
+        echo "  --data-urlencode 'grant_type=client_credentials' \\"
+        echo "  --data-urlencode 'client_id=${{ inputs.client_id }}' \\"
+        echo "  --data-urlencode 'client_secret=${{ inputs.client_secret }}' \\"
+        echo "  --data-urlencode 'audience=${{ inputs.audience }}'"
         RESPONSE=$(curl -s --request POST \
         --url https://login.cloud.camunda.io/oauth/token \
         --header 'Content-Type: application/x-www-form-urlencoded' \
