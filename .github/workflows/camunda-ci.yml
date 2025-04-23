@@ -49,8 +49,7 @@ jobs:
           cp src/main/resources/forms/*.form deploy/ || true
           cp src/main/resources/dmns/*.dmn deploy/ || true
 
-      - name:
-          DEBUG: Print token length
+      - name: Print token length
         run: |
           TOKEN="${{ steps.get_token.outputs.token }}"
           echo "Token length: ${#TOKEN}"
