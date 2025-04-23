@@ -34,6 +34,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug secrets passed from GitHub
+        run: |
+              if [[ -z "${{ secrets.CAMUNDA_CLIENT_ID }}" ]]; then
+                echo "❌ CAMUNDA_CLIENT_ID is empty"
+              else
+                echo "✅ CAMUNDA_CLIENT_ID is set"
+              fi
+              
+              if [[ -z "${{ secrets.CAMUNDA_CLIENT_SECRET }}" ]]; then
+                echo "❌ CAMUNDA_CLIENT_SECRET is empty"
+              else
+                echo "✅ CAMUNDA_CLIENT_SECRET is set"
+              fi
+              
+              if [[ -z "${{ secrets.CAMUNDA_AUTH_AUDIENCE }}" ]]; then
+                echo "❌ CAMUNDA_AUTH_AUDIENCE is empty"
+              else
+                echo "✅ CAMUNDA_AUTH_AUDIENCE is set"
+              fi
+
       - name: Get Zeebe Bearer Token
         id: get_token
         uses: ./actions/get-bearer-token
