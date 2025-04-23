@@ -19,16 +19,25 @@ runs:
       id: get-token
       shell: bash
       run: |
-        echo "DEBUG: client_id=$(echo 'YOUR_REAL_CLIENT_ID' | base64)"
-        echo "DEBUG: client_secret=$(echo 'YOUR_REAL_CLIENT_SECRET' | base64)"
-        echo "DEBUG: audience=$(echo 'YOUR_REAL_AUDIENCE' | base64)"
-        RESPONSE=$(curl -s --request POST \
-        --url https://login.cloud.camunda.io/oauth/token \
+        echo "DEBUG: client_id=$(echo -n 'MFtxiv0TSBxUrBtTYzIwpZ0Z5elzJQNE' | base64)"
+        echo "DEBUG: client_secret=$(echo -n 'rnzbiYvJYjGDWf4.yRfU~2QKpnlljFOXxeuChEzECpZX4gNzZtEAYJU9cRwYnEyM' | base64)"
+        echo "DEBUG: audience=$(echo -n 'zeebe.camunda.io' | base64)"
+          
+          RESPONSE=$(curl -s --request POST \
+          --url https://login.cloud.camunda.io/oauth/token \
         --header 'Content-Type: application/x-www-form-urlencoded' \
-        --data 'grant_type=client_credentials' \
-        --data "client_id=$(echo -n 'MFtxiv0TSBxUrBtTYzIwpZ0Z5elzJQNE')" \
-        --data "client_secret=$(echo -n 'rnzbiYvJYjGDWf4.yRfU~2QKpnlljFOXxeuChEzECpZX4gNzZtEAYJU9cRwYnEyM')" \
-        --data "audience=$(echo -n 'zeebe.camunda.io')")
-
-        ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
-        echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
+          --data-urlencode "grant_type=client_credentials" \
+          --data-urlencode "client_id=$(echo -n 'MFtxiv0TSBxUrBtTYzIwpZ0Z5elzJQNE')" \
+          --data-urlencode "client_secret=$(echo -n 'rnzbiYvJYjGDWf4.yRfU~2QKpnlljFOXxeuChEzECpZX4gNzZtEAYJU9cRwYnEyM')" \
+          --data-urlencode "audience=$(echo -n 'zeebe.camunda.io')")
+        
+        echo "RAW RESPONSE: $RESPONSE"
+          
+          ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
+          if [[ "$ACCESS_TOKEN" == "null" || -z "$ACCESS_TOKEN" ]]; then
+          echo "❌ Failed to extract token"
+          exit 1
+          fi
+          
+          echo "✅ Access token acquired"
+          echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
