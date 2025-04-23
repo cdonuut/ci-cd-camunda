@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "bpmnlint:recommended",
+    "plugin:camunda/recommended"
+  ],
+  "rules": {
+    "label-required": "error",
+    "no-implicit-split": "error",
+    "no-implicit-join": "error"
+  }
+}
