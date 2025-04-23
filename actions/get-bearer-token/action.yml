@@ -35,6 +35,4 @@ runs:
           exit 1
         fi
 
-        # echo "::add-mask::$ACCESS_TOKEN"
-        echo "DEBUG: Token is --> $ACCESS_TOKEN"
-        echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
+        echo "token=${ACCESS_TOKEN}" >> $GITHUB_OUTPUT
