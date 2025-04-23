@@ -42,9 +42,17 @@ jobs:
           client_secret: ${{ secrets.CAMUNDA_CLIENT_SECRET }}
           audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
 
-      - name: Debug Token
+      - name: Debug Token Generation
         run: |
-          echo "Token exists: ${{ steps.get_token.outputs.token != '' }}"
+          # Don't print the actual token, but show if it exists and its length
+          if [[ -n "${{ steps.get_token.outputs.token }}" ]]; then
+            echo "✅ Token generated successfully with length: ${#TOKEN}"
+            echo "First few characters: ${TOKEN:0:5}..."
+          else
+            echo "❌ Token is empty"
+          fi
+        env:
+          TOKEN: ${{ steps.get_token.outputs.token }}
 
       - name: Prepare model files
         run: |

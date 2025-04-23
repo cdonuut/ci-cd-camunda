@@ -22,20 +22,10 @@ runs:
         RESPONSE=$(curl -s --request POST \
         --url https://login.cloud.camunda.io/oauth/token \
         --header 'Content-Type: application/x-www-form-urlencoded' \
-        --data-urlencode "grant_type=client_credentials" \
+        --data-urlencode 'grant_type=client_credentials' \
         --data-urlencode "client_id=${{ inputs.client_id }}" \
         --data-urlencode "client_secret=${{ inputs.client_secret }}" \
         --data-urlencode "audience=${{ inputs.audience }}")
 
-        echo "TOKEN RESPONSE: $RESPONSE"
-
         ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
-        if [[ "$ACCESS_TOKEN" == "null" || -z "$ACCESS_TOKEN" ]]; then
-          echo "❌ Failed to extract access_token"
-          exit 1
-        fi
-
-        # Add this to your get-bearer-token action
-        echo "Response status: $(echo "$RESPONSE" | jq -r '.error // "No error"')"
-        echo "Response description: $(echo "$RESPONSE" | jq -r '.error_description // "No description"')"
-        echo "token=$ACCESS_TOKEN" >> "$GITHUB_OUTPUT"
+        echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
