@@ -1,6 +1,5 @@
 name: "Get Camunda Bearer Token"
 description: "Fetches a fresh Camunda OAuth token using client credentials"
-
 inputs:
   client_id:
     required: true
@@ -12,31 +11,29 @@ inputs:
 outputs:
   token:
     description: "The generated bearer token"
+    value: ${{ steps.get-token.outputs.token }}  # <- THIS is required
 
 runs:
   using: "composite"
   steps:
-    - name: Get Token
-      id: get-token
+    - id: get-token
       shell: bash
       run: |
         RESPONSE=$(curl -s --request POST \
           --url https://login.cloud.camunda.io/oauth/token \
           --header 'Content-Type: application/x-www-form-urlencoded' \
           --data-urlencode "grant_type=client_credentials" \
-          --data-urlencode "client_id=$(echo -n '${{ inputs.client_id }}')" \
-          --data-urlencode "client_secret=$(echo -n '${{ inputs.client_secret }}')" \
-          --data-urlencode "audience=$(echo -n '${{ inputs.audience }}')")
+          --data-urlencode "client_id=${{ inputs.client_id }}" \
+          --data-urlencode "client_secret=${{ inputs.client_secret }}" \
+          --data-urlencode "audience=${{ inputs.audience }}")
 
-        echo "🔍 RAW RESPONSE: $RESPONSE"
+        echo "RAW RESPONSE: $RESPONSE"
 
         ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
-
         if [[ "$ACCESS_TOKEN" == "null" || -z "$ACCESS_TOKEN" ]]; then
           echo "❌ Failed to extract token"
           exit 1
         fi
 
-        echo "✅ Access token acquired"
         echo "::add-mask::$ACCESS_TOKEN"
-        echo "token=$ACCESS_TOKEN" >> "$GITHUB_OUTPUT"
+        echo "::set-output name=token::$ACCESS_TOKEN"

@@ -50,7 +50,7 @@ jobs:
           cp src/main/resources/dmns/*.dmn deploy/ || true
 
       - name: Print token length
-        run: | 
+        run: |
           echo "Token length: ${#${{ steps.get_token.outputs.token }}}"
       
 
