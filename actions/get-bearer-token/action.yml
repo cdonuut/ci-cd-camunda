@@ -39,4 +39,4 @@ runs:
 
         echo "✅ Access token acquired"
         echo "::add-mask::$ACCESS_TOKEN"
-        echo "token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
+        echo "token=$ACCESS_TOKEN" >> "$GITHUB_OUTPUT"
