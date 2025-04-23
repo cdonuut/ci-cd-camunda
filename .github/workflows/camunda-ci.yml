@@ -49,9 +49,11 @@ jobs:
           cp src/main/resources/forms/*.form deploy/ || true
           cp src/main/resources/dmns/*.dmn deploy/ || true
 
-      - name: Print token length
+      - name:
+          DEBUG: Print token length
         run: |
-          echo "Token length: ${#${{ steps.get_token.outputs.token }}}"
+          TOKEN="${{ steps.get_token.outputs.token }}"
+          echo "Token length: ${#TOKEN}"
       
 
       - name: Deploy models to Camunda SaaS
