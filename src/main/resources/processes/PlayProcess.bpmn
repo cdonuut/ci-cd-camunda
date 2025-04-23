@@ -86,9 +86,6 @@
       <bpmn:incoming>Flow_0c73u4e</bpmn:incoming>
       <bpmn:outgoing>Flow_0db77hk</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:startEvent id="StartEvent_1" name="Request Submitted">
-      <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:manualTask id="Activity_0mg01xq" name="Escalate &#38; Report">
       <bpmn:incoming>Flow_1pw3j6j</bpmn:incoming>
       <bpmn:outgoing>Flow_0uec3vm</bpmn:outgoing>
@@ -104,6 +101,12 @@
       <bpmn:incoming>Flow_19qybm8</bpmn:incoming>
       <bpmn:outgoing>Flow_0vobp8z</bpmn:outgoing>
     </bpmn:businessRuleTask>
+    <bpmn:startEvent id="StartEvent_1" name="Request Submitted">
+      <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_15hesqw">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">*/10 * * * * *</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
   </bpmn:process>
   <bpmn:message id="Message_3cbk3qc" name="documentsReceived">
     <bpmn:extensionElements>
@@ -161,12 +164,6 @@
       <bpmndi:BPMNShape id="Activity_1qzpnx6_di" bpmnElement="Activity_1xnrr8n">
         <dc:Bounds x="940" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1xkzjrm_di" bpmnElement="StartEvent_1">
-        <dc:Bounds x="150" y="100" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="143" y="143" width="50" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18j3702_di" bpmnElement="Activity_0mg01xq">
         <dc:Bounds x="620" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -175,6 +172,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zlcv0r_di" bpmnElement="Activity_1qeqsa1">
         <dc:Bounds x="660" y="78" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1x09j8g_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="150" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="143" y="143" width="50" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11h9ge2_di" bpmnElement="Event_09yrfs2">
         <dc:Bounds x="532" y="322" width="36" height="36" />
