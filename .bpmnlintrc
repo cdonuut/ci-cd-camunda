@@ -5,7 +5,9 @@
   ],
   "rules": {
     "label-required": "error",
-    "no-implicit-split": "error",
-    "no-implicit-join": "error"
+    "no-implicit-split": "off",
+    "end-event-required": "error",
+    "no-duplicate-sequence-flows": "error",
+    "no-gateway-join-fork": "error"
   }
 }
