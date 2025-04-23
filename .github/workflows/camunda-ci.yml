@@ -35,8 +35,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get Zeebe Bearer Token
-        uses: ./actions/get-bearer-token
         id: get_token
+        uses: ./actions/get-bearer-token
+        with:
+          client_id: ${{ secrets.CAMUNDA_CLIENT_ID }}
+          client_secret: ${{ secrets.CAMUNDA_CLIENT_SECRET }}
+          audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
 
       - name: Prepare model files
         run: |

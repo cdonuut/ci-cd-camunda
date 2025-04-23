@@ -1,5 +1,17 @@
 name: "Get Camunda Bearer Token"
-description: "Fetch a fresh Camunda Cloud OAuth token using client credentials"
+description: "Fetches a fresh Camunda OAuth token using client credentials"
+inputs:
+  client_id:
+    required: true
+  client_secret:
+    required: true
+  audience:
+    required: true
+
+outputs:
+  token:
+    description: "The generated bearer token"
+
 runs:
   using: "composite"
   steps:
@@ -12,9 +24,9 @@ runs:
           --header 'content-type: application/json' \
           --data '{
             "grant_type":"client_credentials",
-            "client_id":"${{ secrets.CAMUNDA_CLIENT_ID }}",
-            "client_secret":"${{ secrets.CAMUNDA_CLIENT_SECRET }}",
-            "audience":"${{ secrets.CAMUNDA_AUTH_AUDIENCE }}"
+            "client_id":"${{ inputs.client_id }}",
+            "client_secret":"${{ inputs.client_secret }}",
+            "audience":"${{ inputs.audience }}"
           }')
 
         echo "TOKEN RESPONSE: $RESPONSE"
