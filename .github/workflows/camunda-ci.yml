@@ -49,6 +49,11 @@ jobs:
           cp src/main/resources/forms/*.form deploy/ || true
           cp src/main/resources/dmns/*.dmn deploy/ || true
 
+      - name: Print token length
+        run: | 
+          echo "Token length: ${#${{ steps.get_token.outputs.token }}}"
+      
+
       - name: Deploy models to Camunda SaaS
         run: |
           echo "Preparing model files for upload..."
@@ -60,9 +65,7 @@ jobs:
             CURL_ARGS+=(-F "files=@$FILE")
           done
 
-          - name: DEBUG: Print token length
-            run: |
-              echo "Token length: ${#{{ steps.get_token.outputs.token }}}"
+          
           curl -X POST "https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/deployments" \
             -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
             -H "Content-Type: multipart/form-data" \
