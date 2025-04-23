@@ -11,7 +11,7 @@ inputs:
 outputs:
   token:
     description: "The generated bearer token"
-    value: ${{ steps.get-token.outputs.token }}  # <- THIS is required
+    value: ${{ steps.get-token.outputs.token }} 
 
 runs:
   using: "composite"
@@ -31,7 +31,7 @@ runs:
 
         ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
         if [[ "$ACCESS_TOKEN" == "null" || -z "$ACCESS_TOKEN" ]]; then
-          echo "❌ Failed to extract token"
+          echo "Failed to extract token"
           exit 1
         fi
 
