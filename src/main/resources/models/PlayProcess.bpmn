@@ -103,9 +103,6 @@
     </bpmn:businessRuleTask>
     <bpmn:startEvent id="StartEvent_1" name="Request Submitted">
       <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_02lwuco">
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">*/10 * * * * *</bpmn:timeCycle>
-      </bpmn:timerEventDefinition>
     </bpmn:startEvent>
   </bpmn:process>
   <bpmn:message id="Message_3cbk3qc" name="documentsReceived">
@@ -173,7 +170,7 @@
       <bpmndi:BPMNShape id="Activity_0zlcv0r_di" bpmnElement="Activity_1qeqsa1">
         <dc:Bounds x="660" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0aejr1m_di" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="Event_1xbizmo_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="150" y="100" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="143" y="143" width="50" height="27" />
