@@ -42,6 +42,12 @@ jobs:
           client_secret: ${{ secrets.CAMUNDA_CLIENT_SECRET }}
           audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
 
+      # Add a debug step to verify the token is available
+      - name: Debug Token
+        run: |
+          echo "Token exists: ${{ steps.get_token.outputs.token != '' }}"
+          # Don't print the actual token for security reasons
+
       - name: Prepare model files
         run: |
           mkdir deploy
