@@ -62,14 +62,6 @@
       <bpmn:incoming>Flow_1e7flbr</bpmn:incoming>
       <bpmn:outgoing>Flow_0po8ri1</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_1ieh5bt" name="Compliance Check">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="compliance-check" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1lhvrch</bpmn:incoming>
-      <bpmn:incoming>Flow_03uczm8</bpmn:incoming>
-      <bpmn:outgoing>Flow_19qybm8</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_16d6ccs" sourceRef="Activity_1kqcbqo" targetRef="Event_1qf4esp" />
     <bpmn:serviceTask id="Activity_1xnrr8n" name="Initiate Payout">
       <bpmn:extensionElements>
@@ -102,6 +94,11 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1th4u8t</bpmn:incoming>
       <bpmn:outgoing>Flow_1lkg70r</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1ieh5bt" name="Compliance Check">
+      <bpmn:incoming>Flow_1lhvrch</bpmn:incoming>
+      <bpmn:incoming>Flow_03uczm8</bpmn:incoming>
+      <bpmn:outgoing>Flow_19qybm8</bpmn:outgoing>
     </bpmn:manualTask>
   </bpmn:process>
   <bpmn:message id="Message_3cbk3qc" name="documentsReceived">
@@ -150,9 +147,6 @@
       <bpmndi:BPMNShape id="Activity_1d8mnqc_di" bpmnElement="Activity_117xtr9">
         <dc:Bounds x="500" y="260" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_01impi2_di" bpmnElement="Activity_1ieh5bt">
-        <dc:Bounds x="500" y="78" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1qzpnx6_di" bpmnElement="Activity_1xnrr8n">
         <dc:Bounds x="940" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -173,6 +167,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0r2oraq_di" bpmnElement="Activity_1obh97l">
         <dc:Bounds x="240" y="78" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02818vc_di" bpmnElement="Activity_1ieh5bt">
+        <dc:Bounds x="500" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11h9ge2_di" bpmnElement="Event_09yrfs2">
         <dc:Bounds x="532" y="322" width="36" height="36" />
