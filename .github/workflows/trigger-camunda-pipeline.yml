@@ -1,0 +1,19 @@
+name: Trigger Camunda Pipeline
+
+on:
+  push:
+    branches:
+      - '*_promote'
+
+jobs:
+  trigger-camunda:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Start Camunda CI/CD Process
+        uses: ./actions/start-cicd-pipeline
+        with:
+          webhook_url: 'https://bru-2.connectors.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/inbound/510c90ea-7839-4386-9bf7-9d13e35a6754'
