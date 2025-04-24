@@ -95,11 +95,14 @@
       <bpmn:incoming>Flow_1th4u8t</bpmn:incoming>
       <bpmn:outgoing>Flow_1lkg70r</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:manualTask id="Activity_1ieh5bt" name="Compliance Check">
+    <bpmn:serviceTask id="Activity_1ieh5bt" name="Compliance Check">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="compliance-check" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1lhvrch</bpmn:incoming>
       <bpmn:incoming>Flow_03uczm8</bpmn:incoming>
       <bpmn:outgoing>Flow_19qybm8</bpmn:outgoing>
-    </bpmn:manualTask>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:message id="Message_3cbk3qc" name="documentsReceived">
     <bpmn:extensionElements>
@@ -168,7 +171,7 @@
       <bpmndi:BPMNShape id="Activity_0r2oraq_di" bpmnElement="Activity_1obh97l">
         <dc:Bounds x="240" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02818vc_di" bpmnElement="Activity_1ieh5bt">
+      <bpmndi:BPMNShape id="Activity_18c0j8v_di" bpmnElement="Activity_1ieh5bt">
         <dc:Bounds x="500" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11h9ge2_di" bpmnElement="Event_09yrfs2">
