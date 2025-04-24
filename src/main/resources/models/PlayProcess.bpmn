@@ -2,14 +2,6 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="1a30d09" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
   <bpmn:process id="play_process" name="Play Process" isExecutable="true">
     <bpmn:sequenceFlow id="Flow_1th4u8t" sourceRef="StartEvent_1" targetRef="Activity_1obh97l" />
-    <bpmn:serviceTask id="Activity_1obh97l" name="Check Eligibility">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="check-eligibility" />
-        <zeebe:properties />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1th4u8t</bpmn:incoming>
-      <bpmn:outgoing>Flow_1lkg70r</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_0gicq91" name="Eligible?">
       <bpmn:incoming>Flow_1lkg70r</bpmn:incoming>
       <bpmn:outgoing>Flow_1lhvrch</bpmn:outgoing>
@@ -104,6 +96,13 @@
     <bpmn:startEvent id="StartEvent_1" name="Request Submitted">
       <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
     </bpmn:startEvent>
+    <bpmn:manualTask id="Activity_1obh97l" name="Check Eligibility">
+      <bpmn:extensionElements>
+        <zeebe:properties />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1th4u8t</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lkg70r</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:message id="Message_3cbk3qc" name="documentsReceived">
     <bpmn:extensionElements>
@@ -112,10 +111,6 @@
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="play_process">
-      <bpmndi:BPMNShape id="Activity_1jagypd_di" bpmnElement="Activity_1obh97l">
-        <dc:Bounds x="240" y="78" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0gicq91_di" bpmnElement="Gateway_0gicq91" isMarkerVisible="true">
         <dc:Bounds x="395" y="93" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -175,6 +170,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="143" y="143" width="50" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_022ddlz_di" bpmnElement="Activity_1obh97l">
+        <dc:Bounds x="240" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11h9ge2_di" bpmnElement="Event_09yrfs2">
         <dc:Bounds x="532" y="322" width="36" height="36" />
