@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Notify Camunda
         run: |
-          curl -X POST https://your-camunda-webhook \
+          curl -X POST https://bru-2.connectors.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/inbound/checkMergeRequestStatus \
             -H "Content-Type: application/json" \
             -d '{"branch": "${{ github.event.check_suite.head_branch }}"}'
