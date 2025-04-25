@@ -1,20 +1,23 @@
-name: Notify Camunda BPMN on Test Success
+name: Notify Camunda BPMN on PR Merge
 
 on:
-  check_suite:
-    types: [completed]
+  pull_request:
+    types: [closed]
 
 jobs:
-  notify-bpmn:
-    if: github.event.check_suite.conclusion == 'success'
+  notify-camunda:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-
-    env:
-      BRANCH_NAME: ${{ github.event.check_suite.head_branch }}
-
     steps:
-      - name: Notify Camunda
+      - name: Notify Camunda BPMN
         run: |
-          curl -X POST https://bru-2.connectors.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/inbound/checkMergeRequestStatus \
+          curl -X https://bru-2.connectors.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/inbound/checkMergeRequestStatus \
             -H "Content-Type: application/json" \
-            -d "{\"branch\": \"${BRANCH_NAME}\"}"
+            -d '{
+              "pull_request": {
+                "number": ${{ github.event.pull_request.number }},
+                "head": {
+                  "ref": "${{ github.event.pull_request.head.ref }}"
+                }
+              }
+            }
