@@ -1,15 +1,15 @@
-name: Notify Camunda BPMN on PR Merge
+name: Notify Camunda BPMN on PR Merge and Cleanup
 
 on:
   pull_request:
     types: [closed]
 
 jobs:
-  notify-camunda:
+  notify-camunda-and-delete-branch:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Get Zeebe Bearer Token
@@ -20,17 +20,25 @@ jobs:
           client_secret: ${{ secrets.CAMUNDA_CLIENT_SECRET }}
           audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
 
-      - name: Publish Message to Camunda
+      - name: Notify Camunda BPMN
         run: |
-          curl -X POST https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/messages/publication \
-          -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
-          -H "Content-Type: application/json" \
-          -d '{
-          "name": "mergeRequestPassed",
-          "correlationKey": "merged1234",
-          "variables": {
-            "pull_request_number": "${{ github.event.pull_request.number }}",
-            "branch": "${{ github.event.pull_request.head.ref }}"
-          },
-          "timeToLive": 360000
-          }'
+          curl -X POST https://bru-2.zeebe.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/v2/messages/publication \
+            -H "Authorization: Bearer ${{ steps.get_token.outputs.bearer_token }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "messageName": "mergeRequestPassed",
+              "correlationKey": "merged1234",
+              "variables": {
+                "pull_request_number": "${{ github.event.pull_request.number }}",
+                "branch": "${{ github.event.pull_request.head.ref }}"
+              },
+              "timeToLive": "360000"
+            }'
+
+      - name: Delete merged branch
+        run: |
+          BRANCH_NAME=${{ github.event.pull_request.head.ref }}
+          curl -X DELETE \
+            -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/cdonuut/ci-cd-camunda/git/refs/heads/$BRANCH_NAME
