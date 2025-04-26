@@ -32,5 +32,5 @@ jobs:
             "pull_request_number": "${{ github.event.pull_request.number }}",
             "branch": "${{ github.event.pull_request.head.ref }}"
           },
-          "timeToLive": 60000
+          "timeToLive": 360000
           }'
