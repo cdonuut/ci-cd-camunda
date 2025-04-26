@@ -3,7 +3,7 @@
   "executionPlatformVersion": "8.6.0",
   "exporter": {
     "name": "Camunda Web Modeler",
-    "version": "1a30d09"
+    "version": "3812a1a"
   },
   "schemaVersion": 18,
   "id": "send-for-manual-review-0l6ljbg",
@@ -63,7 +63,7 @@
       }
     },
     {
-      "text": "Legal Precedent",
+      "text": "Legal Precedents",
       "type": "text",
       "id": "Text_6",
       "layout": {
