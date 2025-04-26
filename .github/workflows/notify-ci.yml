@@ -23,14 +23,14 @@ jobs:
       - name: Publish Message to Camunda
         run: |
           curl -X POST https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/messages/publication \
-            -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "messageName": "mergeRequestPassed",
-              "correlationKey": "merged1234",
-              "variables": {
-                "pull_request_number": "${{ github.event.pull_request.number }}",
-                "branch": "${{ github.event.pull_request.head.ref }}"
-              },
-              "timeToLive": 60000
-            }'
+          -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+          "name": "mergeRequestPassed",
+          "correlationKey": "merged1234",
+          "variables": {
+            "pull_request_number": "${{ github.event.pull_request.number }}",
+            "branch": "${{ github.event.pull_request.head.ref }}"
+          },
+          "timeToLive": 60000
+          }'
