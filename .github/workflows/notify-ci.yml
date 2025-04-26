@@ -22,7 +22,7 @@ jobs:
 
       - name: Publish Message to Camunda
         run: |
-          curl -X POST https://bru-2.zeebe.camunda.io/${{ secrets.CAMUNDA_CLUSTER_ID }}/zeebe/message \
+          curl -X POST https://bru-2.zeebe.camunda.io:443/${{ secrets.CAMUNDA_CLUSTER_ID }}/v2/messages/publication \
             -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
             -H "Content-Type: application/json" \
             -d '{
