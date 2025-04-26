@@ -9,15 +9,25 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Camunda BPMN
+      - name: Get Zeebe Bearer Token
+        id: get_token
+        uses: ./actions/get-bearer-token
+        with:
+          client_id: ${{ secrets.CAMUNDA_CLIENT_ID }}
+          client_secret: ${{ secrets.CAMUNDA_CLIENT_SECRET }}
+          audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
+
+      - name: Publish Message to Camunda
         run: |
-          curl -X POST https://bru-2.connectors.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/inbound/checkMergeRequestStatus \
+          curl -X POST https://bru-2.zeebe.camunda.io/${{ secrets.CAMUNDA_CLUSTER_ID }}/zeebe/message \
+            -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
             -H "Content-Type: application/json" \
             -d '{
-              "pull_request": {
-                "number": ${{ github.event.pull_request.number }},
-                "head": {
-                  "ref": "${{ github.event.pull_request.head.ref }}"
-                }
-              }
+              "messageName": "mergeRequestPassed",
+              "correlationKey": "merged1234",
+              "variables": {
+                "pull_request_number": "${{ github.event.pull_request.number }}",
+                "branch": "${{ github.event.pull_request.head.ref }}"
+              },
+              "timeToLive": 60000
             }'
