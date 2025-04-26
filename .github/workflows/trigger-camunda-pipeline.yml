@@ -20,6 +20,6 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{
                   "folderId": "7ee2c01e-845a-4592-be80-0ad52bc11f25",
-                  "env": "dev",
+                  "env": "main",
                   "initiator": "GitHub Actions"
                 }'

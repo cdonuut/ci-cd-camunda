@@ -35,7 +35,8 @@ jobs:
               "timeToLive": "360000"
             }'
 
-      - name: Delete merged branch
+      - name: Delete merged promotion branch
+        if: startsWith(github.event.pull_request.head.ref, 'feature-')
         run: |
           BRANCH_NAME=${{ github.event.pull_request.head.ref }}
           curl -X DELETE \
