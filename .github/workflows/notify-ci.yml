@@ -23,7 +23,7 @@ jobs:
       - name: Notify Camunda BPMN
         run: |
           curl -X POST https://bru-2.zeebe.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/v2/messages/publication \
-            -H "Authorization: Bearer ${{ steps.get_token.outputs.bearer_token }}" \
+            -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
             -H "Content-Type: application/json" \
             -d '{
               "messageName": "mergeRequestPassed",
