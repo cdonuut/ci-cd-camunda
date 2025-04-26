@@ -9,6 +9,9 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Get Zeebe Bearer Token
         id: get_token
         uses: ./actions/get-bearer-token
