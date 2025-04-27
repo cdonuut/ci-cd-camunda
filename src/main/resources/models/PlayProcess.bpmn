@@ -97,6 +97,7 @@
       <bpmn:outgoing>Flow_19qybm8</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_1obh97l" name="Check Eligibilities">
+      <bpmn:documentation>This service calls for eligibility check</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:properties />
         <zeebe:taskDefinition type="check-eligibility" />
