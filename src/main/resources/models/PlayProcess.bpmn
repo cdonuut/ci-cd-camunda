@@ -99,7 +99,7 @@
     <bpmn:serviceTask id="Activity_1obh97l" name="Check Eligibilities">
       <bpmn:extensionElements>
         <zeebe:properties />
-        <zeebe:taskDefinition type="check" />
+        <zeebe:taskDefinition type="check-eligibility" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1th4u8t</bpmn:incoming>
       <bpmn:outgoing>Flow_1lkg70r</bpmn:outgoing>
@@ -176,7 +176,7 @@
       <bpmndi:BPMNShape id="Event_1xbizmo_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="102" y="100" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="85" y="136" width="50" height="27" />
+          <dc:Bounds x="95" y="146" width="50" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11h9ge2_di" bpmnElement="Event_09yrfs2">
