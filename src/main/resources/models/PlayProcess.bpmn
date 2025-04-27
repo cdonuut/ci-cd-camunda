@@ -89,6 +89,7 @@
       <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Activity_1ieh5bt" name="Compliance Check">
+      <bpmn:documentation>This service calls for compliance check</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="compliance-checks" />
       </bpmn:extensionElements>
@@ -97,7 +98,6 @@
       <bpmn:outgoing>Flow_19qybm8</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_1obh97l" name="Check Eligibilities">
-      <bpmn:documentation>This service calls for eligibility check</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:properties />
         <zeebe:taskDefinition type="check-eligibility" />
