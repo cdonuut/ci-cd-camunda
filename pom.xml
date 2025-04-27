@@ -19,13 +19,8 @@
         <!-- Zeebe Java Client -->
         <dependency>
             <groupId>io.camunda</groupId>
-            <artifactId>spring-boot-starter-camunda-sdk</artifactId>
-            <version>8.7.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>zeebe-client-java</artifactId>
+            <version>${zeebe.version}</version>
         </dependency>
 
         <!-- For Java 21+: Embedded Engine (faster tests) -->
