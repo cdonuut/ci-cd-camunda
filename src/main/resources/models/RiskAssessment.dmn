@@ -13,7 +13,7 @@
           <text>&lt;50</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_016ot2n">
-          <text>true</text>
+          <text>false</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0kjtuf4">
