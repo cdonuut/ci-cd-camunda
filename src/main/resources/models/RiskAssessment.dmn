@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0t2bjlv" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Web Modeler" exporterVersion="6ad2448" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
-  <decision id="risk-assessment-1p27ib9" name="Risk Assessment">
+  <decision id="risk-assessment-1p27ib9" name="Risk Assessments">
     <decisionTable id="DecisionTable_18yvfsq">
       <input id="Input_1">
         <inputExpression id="InputExpression_1" typeRef="number">
@@ -13,7 +13,7 @@
           <text>&lt;50</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_016ot2n">
-          <text>true</text>
+          <text>false</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0kjtuf4">
