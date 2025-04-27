@@ -70,7 +70,7 @@
       <bpmn:incoming>Flow_0c73u4e</bpmn:incoming>
       <bpmn:outgoing>Flow_0db77hk</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:manualTask id="Activity_0mg01xq" name="Escalate &#38; Report">
+    <bpmn:manualTask id="Activity_0mg01xq" name="Escalate &#38; Reports">
       <bpmn:incoming>Flow_1pw3j6j</bpmn:incoming>
       <bpmn:outgoing>Flow_0uec3vm</bpmn:outgoing>
     </bpmn:manualTask>
@@ -90,7 +90,7 @@
     </bpmn:startEvent>
     <bpmn:serviceTask id="Activity_1ieh5bt" name="Compliance Check">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="compliance-check" />
+        <zeebe:taskDefinition type="compliance-checks" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1lhvrch</bpmn:incoming>
       <bpmn:incoming>Flow_03uczm8</bpmn:incoming>
@@ -157,6 +157,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18j3702_di" bpmnElement="Activity_0mg01xq">
         <dc:Bounds x="690" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1t5sryh_di" bpmnElement="Activity_1kqcbqo">
         <dc:Bounds x="970" y="190" width="100" height="80" />
@@ -166,18 +167,18 @@
         <dc:Bounds x="680" y="78" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xbizmo_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="102" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="95" y="146" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18c0j8v_di" bpmnElement="Activity_1ieh5bt">
         <dc:Bounds x="510" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0o9y0r5_di" bpmnElement="Activity_1obh97l">
         <dc:Bounds x="230" y="78" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1xbizmo_di" bpmnElement="StartEvent_1">
-        <dc:Bounds x="102" y="100" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="95" y="146" width="50" height="27" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11h9ge2_di" bpmnElement="Event_09yrfs2">
         <dc:Bounds x="542" y="322" width="36" height="36" />
