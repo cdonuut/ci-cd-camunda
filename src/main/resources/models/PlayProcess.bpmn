@@ -104,9 +104,6 @@
     </bpmn:serviceTask>
     <bpmn:startEvent id="StartEvent_1" name="Request Submitted">
       <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_148sg1n">
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">*/10 * * * * *</bpmn:timeCycle>
-      </bpmn:timerEventDefinition>
     </bpmn:startEvent>
   </bpmn:process>
   <bpmn:message id="Message_3cbk3qc" name="documentsReceived">
@@ -174,15 +171,15 @@
       <bpmndi:BPMNShape id="Activity_18c0j8v_di" bpmnElement="Activity_1ieh5bt">
         <dc:Bounds x="570" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1yaq67k_di" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="Activity_0o9y0r5_di" bpmnElement="Activity_1obh97l">
+        <dc:Bounds x="310" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04i7u9p_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="162" y="100" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="155" y="146" width="50" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0o9y0r5_di" bpmnElement="Activity_1obh97l">
-        <dc:Bounds x="310" y="78" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11h9ge2_di" bpmnElement="Event_09yrfs2">
         <dc:Bounds x="602" y="322" width="36" height="36" />
