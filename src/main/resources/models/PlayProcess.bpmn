@@ -79,6 +79,7 @@
       <bpmn:outgoing>Flow_16d6ccs</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:businessRuleTask id="Activity_1qeqsa12" name="Risk Assessment">
+      <bpmn:documentation>This DMN checks for risk</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:calledDecision decisionId="risk-assessment-1p27ib9" resultVariable="approved" />
       </bpmn:extensionElements>
@@ -89,7 +90,6 @@
       <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Activity_1ieh5bt" name="Compliance Check">
-      <bpmn:documentation>This service calls for compliance check</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="compliance-checks" />
       </bpmn:extensionElements>
