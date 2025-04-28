@@ -11,7 +11,7 @@ runs:
     - name: Trigger CI/CD pipeline via webhook
       shell: bash
       run: |
-        echo "📤 Triggering CI/CD process at ${{ inputs.webhook_url }}"
+        echo "Triggering CI/CD process at ${{ inputs.webhook_url }}"
         curl -X POST "${{ inputs.webhook_url }}" \
           -H "Content-Type: application/json" \
           -d '{}'
