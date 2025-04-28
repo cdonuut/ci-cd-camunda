@@ -22,6 +22,6 @@ jobs:
                   "folderId": "7ee2c01e-845a-4592-be80-0ad52bc11f25",
                   "env": "dev",
                   "destinationEnvironment": "stage",
-                  "productionEnvironment": "main"
+                  "productionEnvironment": "main",
                   "initiator": "GitHub Actions"
                 }'
