@@ -3,6 +3,9 @@ name: Notify Camunda BPMN on PR Merge and Cleanup
 on:
   pull_request:
     types: [closed]
+    branches-ignore:
+      - main
+      - dev
 
 jobs:
   notify-camunda-and-delete-branch:
