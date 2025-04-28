@@ -105,7 +105,7 @@
     <bpmn:startEvent id="StartEvent_1" name="Request Submitted">
       <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0mm0ydy">
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R2/PT10S</bpmn:timeCycle>
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R1/PT10S</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:startEvent>
   </bpmn:process>
