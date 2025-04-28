@@ -21,5 +21,6 @@ jobs:
             -d '{
                   "folderId": "7ee2c01e-845a-4592-be80-0ad52bc11f25",
                   "env": "main",
+                  "destinationEnvironment": "stage",
                   "initiator": "GitHub Actions"
                 }'
