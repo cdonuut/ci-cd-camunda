@@ -1,0 +1,60 @@
+name: Camunda CI/CD Pipeline (Dev → Stage)
+
+on:
+  push:
+    branches: [ dev, stage ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set environment-specific secrets
+        id: set-secrets
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "dev" ]]; then
+            echo "CLIENT_ID=${{ secrets.CAMUNDA_CLIENT_ID }}" >> $GITHUB_ENV
+            echo "CLIENT_SECRET=${{ secrets.CAMUNDA_CLIENT_SECRET }}" >> $GITHUB_ENV
+            echo "CLUSTER_ID=${{ secrets.CAMUNDA_CLUSTER_ID }}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF##*/}" == "stage" ]]; then
+            echo "CLIENT_ID=${{ secrets.CAMUNDA_STAGE_CLIENT_ID }}" >> $GITHUB_ENV
+            echo "CLIENT_SECRET=${{ secrets.CAMUNDA_STAGE_CLIENT_SECRET }}" >> $GITHUB_ENV
+            echo "CLUSTER_ID=${{ secrets.CAMUNDA_STAGE_CLUSTER_ID }}" >> $GITHUB_ENV
+          fi
+
+      - name: Get Zeebe Bearer Token
+        id: get_token
+        uses: ./actions/get-bearer-token
+        with:
+          client_id: ${{ env.CLIENT_ID }}
+          client_secret: ${{ env.CLIENT_SECRET }}
+          audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
+
+      - name: Prepare model files
+        run: |
+          mkdir deploy
+          cp src/main/resources/models/*.bpmn deploy/ || true
+          cp src/main/resources/models/*.form deploy/ || true
+          cp src/main/resources/models/*.dmn deploy/ || true
+
+      - name: Deploy models to Camunda
+        run: |
+          FILES=$(find deploy -type f)
+          CURL_ARGS=()
+          for FILE in $FILES; do
+            CURL_ARGS+=(-F "resources=@$FILE")
+          done
+
+          curl -X POST "https://bru-2.zeebe.camunda.io:443/$CLUSTER_ID/v2/deployments" \
+            -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
+            -H "Content-Type: multipart/form-data" \
+            "${CURL_ARGS[@]}"
