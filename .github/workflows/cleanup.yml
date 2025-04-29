@@ -17,4 +17,4 @@ jobs:
           curl -X DELETE \
             -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
             -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/<your-username-or-org>/<your-repo>/git/refs/heads/$BRANCH_NAME
+            https://api.github.com/repos/cdonuut/ci-cd-camunda/git/refs/heads/$BRANCH_NAME
