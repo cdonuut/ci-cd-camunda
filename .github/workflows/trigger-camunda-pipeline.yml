@@ -12,6 +12,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Wait for BPMN to be ready
+        run: sleep 10
+
       - name: Trigger Camunda SaaS CI/CD Process
         run: |
           echo "🚀 Triggering CI/CD process..."
@@ -23,4 +26,4 @@ jobs:
                   "destinationEnvironment": "stage",
                   "productionEnvironment": "main",
                   "initiator": "GitHub Actions"
-                }'
+          }'

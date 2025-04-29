@@ -1,0 +1,20 @@
+name: Delete merged feature branch
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - dev
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete merged branch
+        if: startsWith(github.event.pull_request.head.ref, 'feature-') || startsWith(github.event.pull_request.head.ref, 'updated-')
+        run: |
+          BRANCH_NAME=${{ github.event.pull_request.head.ref }}
+          curl -X DELETE \
+            -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/<your-username-or-org>/<your-repo>/git/refs/heads/$BRANCH_NAME
