@@ -2,7 +2,7 @@ name: Camunda CI/CD Pipeline (Dev → Stage)
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ dev, stage ]
 
 jobs:
   deploy:
