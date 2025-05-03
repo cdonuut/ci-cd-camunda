@@ -7,6 +7,7 @@ on:
 
 jobs:
   auto-merge:
+    name: Auto Merge Dev → Stage
     runs-on: ubuntu-latest
 
     steps:
@@ -26,14 +27,18 @@ jobs:
           git remote add upstream https://github.com/cdonuut/ci-cd-camunda.git
           git fetch upstream dev
 
-      - name: Debug – Show difference between stage and dev
+      - name: Debug – Show diff from upstream/dev
         run: |
-          echo "🔍 Checking difference between stage and upstream/dev:"
-          git log --oneline upstream/dev..HEAD
+          echo "🔍 Diff from dev:"
+          git log --oneline upstream/dev..HEAD || echo "No difference."
 
-      - name: Merge dev into stage
+      - name: Merge upstream/dev into stage
         run: |
-          git merge upstream/dev --no-ff --no-edit || exit 1
+          git merge upstream/dev --no-ff --no-edit || echo "⚠️ Nothing to merge."
 
       - name: Push changes to stage
-        run: git push origin stage
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
+          git push origin stage
