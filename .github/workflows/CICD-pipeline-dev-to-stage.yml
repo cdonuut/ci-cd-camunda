@@ -1,16 +1,21 @@
 name: Camunda CI/CD Pipeline (Dev → Stage)
 
 on:
-  push:
-    branches: [ dev, stage ]
+  workflow_run:
+    workflows: ["Auto Merge Dev to Stage"]
+    types:
+      - completed
 
 jobs:
   deploy:
+    name: Deploy to Camunda Cluster - ${{ github.event.workflow_run.head_branch }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: stage
 
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -18,18 +23,11 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Set environment-specific secrets
-        id: set-secrets
+      - name: Set stage secrets
         run: |
-          if [[ "${GITHUB_REF##*/}" == "dev" ]]; then
-            echo "CLIENT_ID=${{ secrets.CAMUNDA_CLIENT_ID }}" >> $GITHUB_ENV
-            echo "CLIENT_SECRET=${{ secrets.CAMUNDA_CLIENT_SECRET }}" >> $GITHUB_ENV
-            echo "CLUSTER_ID=${{ secrets.CAMUNDA_CLUSTER_ID }}" >> $GITHUB_ENV
-          elif [[ "${GITHUB_REF##*/}" == "stage" ]]; then
-            echo "CLIENT_ID=${{ secrets.CAMUNDA_STAGE_CLIENT_ID }}" >> $GITHUB_ENV
-            echo "CLIENT_SECRET=${{ secrets.CAMUNDA_STAGE_CLIENT_SECRET }}" >> $GITHUB_ENV
-            echo "CLUSTER_ID=${{ secrets.CAMUNDA_STAGE_CLUSTER_ID }}" >> $GITHUB_ENV
-          fi
+          echo "CLIENT_ID=${{ secrets.CAMUNDA_STAGE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "CLIENT_SECRET=${{ secrets.CAMUNDA_STAGE_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "CLUSTER_ID=${{ secrets.CAMUNDA_STAGE_CLUSTER_ID }}" >> $GITHUB_ENV
 
       - name: Get Zeebe Bearer Token
         id: get_token
@@ -46,7 +44,7 @@ jobs:
           cp src/main/resources/models/*.form deploy/ || true
           cp src/main/resources/models/*.dmn deploy/ || true
 
-      - name: Deploy models to Camunda
+      - name: Deploy to Camunda Stage
         run: |
           FILES=$(find deploy -type f)
           CURL_ARGS=()
