@@ -1,4 +1,4 @@
-name: Deployment to Camunda Cluster
+name: Deployment to Camunda Clusters
 
 on:
   push:
