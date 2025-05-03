@@ -42,7 +42,15 @@ jobs:
             }'
 
       - name: Delete merged feature branch
-        if: startsWith(github.event.pull_request.head.ref, 'feature-') || startsWith(github.event.pull_request.head.ref, 'updated-')
+        if: startsWith(github.event.pull_request.head.ref, 'feature/') ||
+          startsWith(github.event.pull_request.head.ref, 'bugfix/') ||
+          startsWith(github.event.pull_request.head.ref, 'hotfix/') ||
+          startsWith(github.event.pull_request.head.ref, 'release/') ||
+          startsWith(github.event.pull_request.head.ref, 'chore/') ||
+          startsWith(github.event.pull_request.head.ref, 'docs/') ||
+          startsWith(github.event.pull_request.head.ref, 'test/') ||
+          startsWith(github.event.pull_request.head.ref, 'refactor/') ||
+          startsWith(github.event.pull_request.head.ref, 'updated-')
         run: |
           BRANCH_NAME=${{ github.event.pull_request.head.ref }}
           echo "🧹 Deleting merged branch: $BRANCH_NAME"

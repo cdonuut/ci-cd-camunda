@@ -1,4 +1,4 @@
-name: Camunda CI/CD Pipeline (Dev → Stage)
+name: Camunda Cluster Deployment (Dev → Stage)
 
 on:
   push:

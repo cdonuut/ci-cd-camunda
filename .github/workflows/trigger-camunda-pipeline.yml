@@ -1,4 +1,4 @@
-name: Trigger Camunda CI/CD Pipeline on Merge to Dev
+name: Trigger CI/CD Camunda Process
 
 on:
   push:
