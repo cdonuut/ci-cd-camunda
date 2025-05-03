@@ -105,7 +105,7 @@
     <bpmn:startEvent id="StartEvent_1" name="Request Submitted">
       <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0mm0ydy">
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R2/PT10S</bpmn:timeCycle>
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R1/PT10S</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:startEvent>
   </bpmn:process>
@@ -134,22 +134,10 @@
           <dc:Bounds x="1169" y="143" width="82" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1qf4esp_di" bpmnElement="Event_1qf4esp">
-        <dc:Bounds x="1192" y="212" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1166" y="255" width="88" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1tz70bw_di" bpmnElement="Event_1tz70bw">
         <dc:Bounds x="812" y="282" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="792" y="325" width="78" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_16d88zo_di" bpmnElement="Event_16d88zo">
-        <dc:Bounds x="942" y="402" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="921" y="445" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1d8mnqc_di" bpmnElement="Activity_117xtr94">
@@ -183,6 +171,18 @@
         <dc:Bounds x="132" y="100" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="125" y="146" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16d88zo_di" bpmnElement="Event_16d88zo">
+        <dc:Bounds x="1192" y="492" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1171" y="535" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1qf4esp_di" bpmnElement="Event_1qf4esp">
+        <dc:Bounds x="1252" y="212" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1226" y="255" width="88" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11h9ge2_di" bpmnElement="Event_09yrfs2">
@@ -262,11 +262,13 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0uec3vm_di" bpmnElement="Flow_0uec3vm">
         <di:waypoint x="850" y="420" />
-        <di:waypoint x="942" y="420" />
+        <di:waypoint x="976" y="420" />
+        <di:waypoint x="976" y="510" />
+        <di:waypoint x="1192" y="510" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_16d6ccs_di" bpmnElement="Flow_16d6ccs">
         <di:waypoint x="1130" y="230" />
-        <di:waypoint x="1192" y="230" />
+        <di:waypoint x="1252" y="230" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
