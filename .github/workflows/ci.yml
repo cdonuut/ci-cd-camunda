@@ -6,6 +6,7 @@ on:
 
 jobs:
   test-and-lint:
+    name: CI Checks for PR to ${{ github.base_ref }}
     runs-on: ubuntu-latest
 
     steps:
