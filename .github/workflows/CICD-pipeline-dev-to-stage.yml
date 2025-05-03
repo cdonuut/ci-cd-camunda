@@ -6,6 +6,7 @@ on:
 
 jobs:
   deploy:
+    name: CI/CD Pipeline on ${{ github.base_ref }}
     runs-on: ubuntu-latest
 
     steps:
