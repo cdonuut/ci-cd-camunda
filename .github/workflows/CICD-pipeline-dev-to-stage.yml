@@ -1,4 +1,4 @@
-name: Camunda CI/CD Pipeline (Dev → Stage)
+name: Deployment to Camunda Clusters
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
 
 jobs:
   deploy:
+    name: Deployment to Camunda Cluster on ${{ github.ref_name }}
     runs-on: ubuntu-latest
 
     steps:
