@@ -25,9 +25,9 @@ jobs:
 
       - name: Notify Camunda BPMN
         run: |
-          echo "⏳ Waiting before notifying Camunda..."
+          echo "Waiting before notifying Camunda..."
           sleep 5
-          echo "📨 Sending mergeRequestPassed message to Camunda..."
+          echo "Sending mergeRequestPassed message to Camunda..."
           curl -X POST https://bru-2.zeebe.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/v2/messages/publication \
             -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
             -H "Content-Type: application/json" \
@@ -42,7 +42,15 @@ jobs:
             }'
 
       - name: Delete merged feature branch
-        if: startsWith(github.event.pull_request.head.ref, 'feature-') || startsWith(github.event.pull_request.head.ref, 'updated-')
+        if: startsWith(github.event.pull_request.head.ref, 'feature/') ||
+          startsWith(github.event.pull_request.head.ref, 'bugfix/') ||
+          startsWith(github.event.pull_request.head.ref, 'hotfix/') ||
+          startsWith(github.event.pull_request.head.ref, 'release/') ||
+          startsWith(github.event.pull_request.head.ref, 'chore/') ||
+          startsWith(github.event.pull_request.head.ref, 'docs/') ||
+          startsWith(github.event.pull_request.head.ref, 'test/') ||
+          startsWith(github.event.pull_request.head.ref, 'refactor/') ||
+          startsWith(github.event.pull_request.head.ref, 'updated-')
         run: |
           BRANCH_NAME=${{ github.event.pull_request.head.ref }}
           echo "🧹 Deleting merged branch: $BRANCH_NAME"
