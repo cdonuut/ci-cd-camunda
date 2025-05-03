@@ -3,25 +3,37 @@ name: Auto Merge Dev to Stage
 on:
   push:
     branches:
-      - stage
+      - dev
 
 jobs:
-  merge-dev-into-stage:
+  auto-merge:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout stage
+      - name: Checkout stage branch
         uses: actions/checkout@v4
         with:
           ref: stage
-          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
 
-      - name: Set Git identity
+      - name: Configure Git identity
         run: |
           git config user.name "ci-bot"
-          git config user.email "ci-bot@users.noreply.github.com"
+          git config user.email "ci@ci.com"
 
-      - name: Fetch and merge dev
+      - name: Add dev as upstream and fetch
         run: |
-          git fetch origin dev
-          git merge origin/dev --no-edit || true
-          git push origin stage
+          git remote add upstream https://github.com/cdonuut/ci-cd-camunda.git
+          git fetch upstream dev
+
+      - name: Debug – Show difference between stage and dev
+        run: |
+          echo "🔍 Checking difference between stage and upstream/dev:"
+          git log --oneline upstream/dev..HEAD
+
+      - name: Merge dev into stage
+        run: |
+          git merge upstream/dev --no-ff --no-edit || exit 1
+
+      - name: Push changes to stage
+        run: git push origin stage
