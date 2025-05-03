@@ -1,4 +1,4 @@
-name: CI/CD Pipeline BPMN Process
+name: Trigger Camunda CI/CD BPMN Process on Dev Push
 
 on:
   push:
