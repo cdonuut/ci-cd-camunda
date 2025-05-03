@@ -1,4 +1,4 @@
-name: Notify Camunda BPMN and Cleanup on PR Merge
+name: Notify Camunda BPMN on PR Merge
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
       - closed
 
 jobs:
-  notify-and-cleanup:
+  notify:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
@@ -25,8 +25,6 @@ jobs:
 
       - name: Notify Camunda BPMN
         run: |
-          echo "Waiting before notifying Camunda..."
-          sleep 5
           echo "Sending mergeRequestPassed message to Camunda..."
           curl -X POST https://bru-2.zeebe.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/v2/messages/publication \
             -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
@@ -40,21 +38,3 @@ jobs:
               },
               "timeToLive": "300000"
             }'
-
-      - name: Delete merged feature branch
-        if: startsWith(github.event.pull_request.head.ref, 'feature/') ||
-          startsWith(github.event.pull_request.head.ref, 'bugfix/') ||
-          startsWith(github.event.pull_request.head.ref, 'hotfix/') ||
-          startsWith(github.event.pull_request.head.ref, 'release/') ||
-          startsWith(github.event.pull_request.head.ref, 'chore/') ||
-          startsWith(github.event.pull_request.head.ref, 'docs/') ||
-          startsWith(github.event.pull_request.head.ref, 'test/') ||
-          startsWith(github.event.pull_request.head.ref, 'refactor/') ||
-          startsWith(github.event.pull_request.head.ref, 'updated-')
-        run: |
-          BRANCH_NAME=${{ github.event.pull_request.head.ref }}
-          echo "🧹 Deleting merged branch: $BRANCH_NAME"
-          curl -X DELETE \
-            -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/cdonuut/ci-cd-camunda/git/refs/heads/$BRANCH_NAME

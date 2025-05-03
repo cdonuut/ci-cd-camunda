@@ -1,20 +1,15 @@
-name: Trigger Camunda CI/CD Pipeline on Merge to Dev
+name: Trigger Camunda CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - dev
+  workflow_run:
+    workflows: ["Notify Camunda BPMN on PR Merge"]
+    types:
+      - completed
 
 jobs:
   trigger-cicd:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Wait for BPMN to be ready
-        run: sleep 10
-
       - name: Trigger Camunda SaaS CI/CD Process
         run: |
           echo "Triggering CI/CD process..."
