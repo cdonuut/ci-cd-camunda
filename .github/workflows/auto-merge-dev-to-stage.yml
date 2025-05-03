@@ -1,0 +1,27 @@
+name: Auto Merge Dev to Stage
+
+on:
+  push:
+    branches:
+      - stage
+
+jobs:
+  merge-dev-into-stage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout stage
+        uses: actions/checkout@v4
+        with:
+          ref: stage
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Set Git identity
+        run: |
+          git config user.name "ci-bot"
+          git config user.email "ci-bot@users.noreply.github.com"
+
+      - name: Fetch and merge dev
+        run: |
+          git fetch origin dev
+          git merge origin/dev --no-edit || true
+          git push origin stage
