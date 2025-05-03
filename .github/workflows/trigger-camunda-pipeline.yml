@@ -17,13 +17,13 @@ jobs:
 
       - name: Trigger Camunda SaaS CI/CD Process
         run: |
-          echo "🚀 Triggering CI/CD process..."
+          echo "Triggering CI/CD process..."
           curl -X POST "https://bru-2.connectors.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/inbound/510c90ea-7839-4386-9bf7-9d13e35a6754" \
             -H "Content-Type: application/json" \
             -d '{
                   "folderId": "7ee2c01e-845a-4592-be80-0ad52bc11f25",
-                  "env": "dev",
-                  "destinationEnvironment": "stage",
+                  "devEnvironment": "dev",
+                  "stageEnvironment": "stage",
                   "productionEnvironment": "main",
                   "initiator": "GitHub Actions"
           }'
