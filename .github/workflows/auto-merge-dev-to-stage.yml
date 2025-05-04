@@ -29,12 +29,12 @@ jobs:
 
       - name: Debug – Show diff from upstream/dev
         run: |
-          echo "🔍 Diff from dev:"
+          echo "Diff from dev:"
           git log --oneline upstream/dev..HEAD || echo "No difference."
 
       - name: Merge upstream/dev into stage
         run: |
-          git merge upstream/dev --no-ff --no-edit || echo "⚠️ Nothing to merge."
+          git merge upstream/dev --no-ff --no-edit || echo "Nothing to merge."
 
       - name: Push changes to stage
         env:
