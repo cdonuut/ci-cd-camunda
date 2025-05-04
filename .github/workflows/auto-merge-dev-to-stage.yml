@@ -34,7 +34,7 @@ jobs:
 
       - name: Merge upstream/dev into stage
         run: |
-          git merge upstream/dev --no-ff --no-edit || echo "⚠️ Nothing to merge."
+          git merge upstream/dev --no-ff --no-edit || echo "Nothing to merge."
 
       - name: Push changes to stage
         env:
