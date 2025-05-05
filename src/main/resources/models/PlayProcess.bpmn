@@ -94,7 +94,7 @@
       <bpmn:incoming>Flow_03uczm8</bpmn:incoming>
       <bpmn:outgoing>Flow_19qybm8</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1obh97l" name="Check Eligibilities">
+    <bpmn:serviceTask id="Activity_1obh97l" name="Check Eligibility">
       <bpmn:extensionElements>
         <zeebe:properties />
         <zeebe:taskDefinition type="check-eligibility" />
@@ -105,7 +105,7 @@
     <bpmn:startEvent id="StartEvent_1" name="Request Submitted">
       <bpmn:outgoing>Flow_1th4u8t</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0mm0ydy">
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R1/PT10S</bpmn:timeCycle>
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R2/PT10S</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:startEvent>
   </bpmn:process>
@@ -146,6 +146,12 @@
           <dc:Bounds x="792" y="325" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16d88zo_di" bpmnElement="Event_16d88zo">
+        <dc:Bounds x="942" y="402" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="921" y="445" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1d8mnqc_di" bpmnElement="Activity_117xtr94">
         <dc:Bounds x="570" y="260" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -177,12 +183,6 @@
         <dc:Bounds x="132" y="100" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="125" y="146" width="50" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_16d88zo_di" bpmnElement="Event_16d88zo">
-        <dc:Bounds x="982" y="402" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="961" y="445" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11h9ge2_di" bpmnElement="Event_09yrfs2">
@@ -262,7 +262,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0uec3vm_di" bpmnElement="Flow_0uec3vm">
         <di:waypoint x="850" y="420" />
-        <di:waypoint x="982" y="420" />
+        <di:waypoint x="942" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_16d6ccs_di" bpmnElement="Flow_16d6ccs">
         <di:waypoint x="1130" y="230" />
