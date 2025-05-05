@@ -1,0 +1,36 @@
+name: "Send Message to Camunda BPMN"
+description: "Reusable action to send a BPMN message to Camunda Zeebe"
+
+inputs:
+  zeebe_url:
+    description: "Camunda Zeebe message endpoint"
+    required: true
+  token:
+    description: "Bearer token for Camunda"
+    required: true
+  message_name:
+    description: "The BPMN message name"
+    required: true
+  correlation_key:
+    description: "Correlation key for the BPMN message"
+    required: true
+  variables_json:
+    description: "Variables to include in the message (as raw JSON string)"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Send message to Camunda
+      shell: bash
+      run: |
+        echo "Sending message '$MESSAGE_NAME' to Camunda..."
+        curl -X POST "${{ inputs.zeebe_url }}" \
+          -H "Authorization: Bearer ${{ inputs.token }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "name": "${{ inputs.message_name }}",
+            "correlationKey": "${{ inputs.correlation_key }}",
+            "variables": ${{ inputs.variables_json }},
+            "timeToLive": "300000"
+          }'

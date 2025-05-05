@@ -1,13 +1,12 @@
-name: Trigger Camunda CI/CD Pipeline
-
 on:
   workflow_run:
-    workflows: ["Notify Camunda BPMN on PR Merge"]
+    workflows: ["Notify Camunda – Dev PR Merge Event"]
     types:
       - completed
 
 jobs:
   trigger-cicd:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Camunda SaaS CI/CD Process
@@ -21,4 +20,4 @@ jobs:
                   "stageEnvironment": "stage",
                   "productionEnvironment": "main",
                   "initiator": "GitHub Actions"
-          }'
+                }'
