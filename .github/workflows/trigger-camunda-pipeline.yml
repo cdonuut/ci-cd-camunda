@@ -1,3 +1,5 @@
+name: Trigger Camunda CI/CD Pipeline on Dev PR Merge
+
 on:
   workflow_run:
     workflows: ["Notify Camunda – Dev PR Merge Event"]

@@ -1,19 +1,17 @@
 name: Camunda CI/CD Deployment (Stage)
 
 on:
-  workflow_run:
-    workflows: ["Camunda CI/CD Deployment (Dev)"]
-    types:
-      - completed
+  push:
+    branches:
+      - stage
 
 jobs:
   deploy-stage:
-    name: Deploy to Camunda Cluster - Stage
+    name: Deploy to Camunda Cluster – Stage
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
-      - name: Checkout Stage
+      - name: Checkout Stage Branch
         uses: actions/checkout@v4
         with:
           ref: stage
@@ -24,7 +22,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Set Stage secrets
+      - name: Set Camunda Stage Secrets
         run: |
           echo "CLIENT_ID=${{ secrets.CAMUNDA_STAGE_CLIENT_ID }}" >> $GITHUB_ENV
           echo "CLIENT_SECRET=${{ secrets.CAMUNDA_STAGE_CLIENT_SECRET }}" >> $GITHUB_ENV
@@ -38,14 +36,14 @@ jobs:
           client_secret: ${{ env.CLIENT_SECRET }}
           audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
 
-      - name: Prepare model files
+      - name: Prepare Model Files
         run: |
-          mkdir deploy
+          mkdir -p deploy
           cp src/main/resources/models/*.bpmn deploy/ || true
           cp src/main/resources/models/*.form deploy/ || true
           cp src/main/resources/models/*.dmn deploy/ || true
 
-      - name: Deploy to Camunda Stage
+      - name: Deploy to Camunda Stage Cluster
         run: |
           FILES=$(find deploy -type f)
           CURL_ARGS=()
