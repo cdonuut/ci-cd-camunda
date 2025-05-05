@@ -1,0 +1,35 @@
+name: Notify Camunda – Stage Deployment Started
+
+on:
+  push:
+    branches: [ stage ]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Zeebe Bearer Token
+        id: get_token
+        uses: ./actions/get-bearer-token
+        with:
+          client_id: ${{ secrets.CAMUNDA_CLIENT_ID }}
+          client_secret: ${{ secrets.CAMUNDA_CLIENT_SECRET }}
+          audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
+
+      - name: Send message to Camunda Dev Cluster
+        uses: ./actions/send-camunda-message
+        with:
+          zeebe_url: https://bru-2.zeebe.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/v2/messages/publication
+          token: ${{ steps.get_token.outputs.token }}
+          message_name: stageDeploymentStarted
+          correlation_key: stageDeploymentStarted
+          variables_json: |
+            {
+              "branch": "stage",
+              "commit": "${{ github.sha }}",
+              "environment": "stage"
+            }
