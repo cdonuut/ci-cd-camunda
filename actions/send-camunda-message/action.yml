@@ -24,7 +24,7 @@ runs:
     - name: Send message to Camunda
       shell: bash
       run: |
-        echo "Sending message '$MESSAGE_NAME' to Camunda..."
+        echo "Sending message '$MESSAGE_NAME' to Camunda.."
         curl -X POST "${{ inputs.zeebe_url }}" \
           -H "Authorization: Bearer ${{ inputs.token }}" \
           -H "Content-Type: application/json" \
