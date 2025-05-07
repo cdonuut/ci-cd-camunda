@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Trigger Camunda SaaS CI/CD Process
         run: |
-          echo "Triggering CI/CD process.xxx...."
+          echo "Triggering CI/CD process....."
           curl -X POST "https://bru-2.connectors.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/inbound/510c90ea-7839-4386-9bf7-9d13e35a6754" \
             -H "Content-Type: application/json" \
             -d '{
