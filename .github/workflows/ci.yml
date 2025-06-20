@@ -1,0 +1,29 @@
+name: CI Checks
+
+on:
+  pull_request:
+    branches: [ dev, stage, main ]
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Run tests
+        run: mvn clean test
+
+      - name: Install BPMN linter
+        run: |
+          npm install bpmnlint bpmnlint-plugin-camunda
+          for file in src/main/resources/models/*.bpmn; do
+            echo "Linting $file"
+            npx bpmnlint "$file"
+          done

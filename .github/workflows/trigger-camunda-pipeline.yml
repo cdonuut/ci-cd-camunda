@@ -1,0 +1,25 @@
+name: Trigger Camunda CI/CD Pipeline on Dev PR Merge
+
+on:
+  workflow_run:
+    workflows: ["Notify Camunda – Dev PR Merge Event"]
+    types:
+      - completed
+
+jobs:
+  trigger-cicd:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Camunda SaaS CI/CD Process
+        run: |
+          echo "Triggering CI/CD process... ."
+          curl -X POST "https://bru-2.connectors.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/inbound/510c90ea-7839-4386-9bf7-9d13e35a6754" \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "folderId": "7ee2c01e-845a-4592-be80-0ad52bc11f25",
+                  "devEnvironment": "dev",
+                  "stageEnvironment": "stage",
+                  "productionEnvironment": "main",
+                  "initiator": "GitHub Actions"
+                }'

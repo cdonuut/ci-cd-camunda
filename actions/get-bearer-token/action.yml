@@ -1,0 +1,39 @@
+name: "Get Camunda Bearer Token"
+description: "Fetches a fresh Camunda OAuth token using client credentials"
+inputs:
+  client_id:
+    required: true
+  client_secret:
+    required: true
+  audience:
+    required: true
+
+outputs:
+  token:
+    description: "The generated bearer token"
+    value: ${{ steps.get-token.outputs.token }}
+
+runs:
+  using: "composite"
+  steps:
+    - id: get-token
+      shell: bash
+      run: |
+        RESPONSE=$(curl -s --request POST \
+          --url https://login.cloud.camunda.io/oauth/token \
+          --header 'Content-Type: application/x-www-form-urlencoded' \
+          --data-urlencode "grant_type=client_credentials" \
+          --data-urlencode "client_id=${{ inputs.client_id }}" \
+          --data-urlencode "client_secret=${{ inputs.client_secret }}" \
+          --data-urlencode "audience=${{ inputs.audience }}")
+
+        echo "RAW RESPONSE: $RESPONSE"
+
+        ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
+        if [[ "$ACCESS_TOKEN" == "null" || -z "$ACCESS_TOKEN" ]]; then
+          echo "Failed to extract token"
+          exit 1
+        fi
+
+        echo "::add-mask::$ACCESS_TOKEN"
+        echo "::set-output name=token::$ACCESS_TOKEN"

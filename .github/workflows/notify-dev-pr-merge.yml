@@ -1,0 +1,36 @@
+name: Notify Camunda – Dev PR Merge Event
+
+on:
+  pull_request:
+    branches: [ dev ]
+    types: [ closed ]
+
+jobs:
+  notify:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Zeebe Bearer Token
+        id: get_token
+        uses: ./actions/get-bearer-token
+        with:
+          client_id: ${{ secrets.CAMUNDA_CLIENT_ID }}
+          client_secret: ${{ secrets.CAMUNDA_CLIENT_SECRET }}
+          audience: ${{ secrets.CAMUNDA_AUTH_AUDIENCE }}
+
+      - name: Send message to Camunda
+        uses: ./actions/send-camunda-message
+        with:
+          zeebe_url: https://bru-2.zeebe.camunda.io/2a1d22c6-5683-423b-9d58-0ff0a77fcb86/v2/messages/publication
+          token: ${{ steps.get_token.outputs.token }}
+          message_name: devMergeRequestPassed
+          correlation_key: devMergeRequestPassed
+          variables_json: |
+            {
+              "pull_request_number": "${{ github.event.pull_request.number }}",
+              "branch": "${{ github.event.pull_request.head.ref }}"
+            }
