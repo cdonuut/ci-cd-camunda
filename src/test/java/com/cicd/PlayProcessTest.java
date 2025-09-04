@@ -2,7 +2,6 @@ package com.cicd;
 
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.DeploymentEvent;
-import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine;
 import io.camunda.zeebe.process.test.assertions.BpmnAssert;
 import io.camunda.zeebe.process.test.extension.ZeebeProcessTest;
@@ -13,7 +12,6 @@ import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ZeebeProcessTest
 public class PlayProcessTest {
@@ -39,8 +37,9 @@ public class PlayProcessTest {
     // Now assert that the process started
     BpmnAssert.assertThat(deployment).containsProcessesByBpmnProcessId( "play_process");
   }
-  @Test
 
+
+  @Test
   void shouldCompleteConnectorStep() throws InterruptedException, TimeoutException {
     // Deploy (optional if using @BeforeEach for setup)
     DeploymentEvent deployment = client.newDeployResourceCommand()
